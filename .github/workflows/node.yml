@@ -2,37 +2,19 @@ name: integracion continua con node.js
 
 on:
   push:
+    branches: [ "master" ]
 
 jobs:
-
-  run:
-   
+  build:
     runs-on: ubuntu-latest
-   
+
     steps:
-      - name: 'Checkout 🚀'
-      
-        uses: actions/checkout@v4
-
-      - name: 'Setup node ⚙'
-          
-        uses: actions/setup-node@v4
-        
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
+           node-version: 18  
+      - run: npm install
+      - run: npm ci
+      - run: npm install --save-dev jest
+      - run: npm test
 
-          node-version: 16
-
-      - name: ' instalacion dependencias💻'
-        
-        run: npm ci
-
-      - name: 'Build typescript 📟'
-
-        run: npm run build
-
-      - name: 'Run test ✔'
-       
-        run: npm run test
-
-     
-  
